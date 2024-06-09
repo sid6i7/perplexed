@@ -89,7 +89,7 @@ class Model:
         Returns:
             list: A list containing the prompt messages.
         """
-        comments = "\n".join([f"{comment['body'].strip()} : {comment['score']} : {comment['url']} : {comment['post_title']}" for comment in comments])
+        comments = "\n".join([f"{comment['body'].strip()} : {comment['score']} : {comment['url']}" for comment in comments])
         model_message = ChatMessage(
             role="model",
             message=f"""Generate a response for the question: "{query}" by using knowledge from the provided comments.\nEach comment is in the format: <text : upvotes : url : post_title>. """
