@@ -119,7 +119,7 @@ class Model:
             top_comments = self.reddit.search(query)
             prompt = self.__generate_prompt(query, top_comments)
             response = self.model.generate_content(contents=prompt).text
-        except:
-            print("Some error occurred")
+        except Exception as e:
+            print("Some error occurred", e)
             response = "Unable to answer that question, it might be inappropiate."
         return response
