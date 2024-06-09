@@ -38,12 +38,15 @@ class Reddit:
         client_secret = os.environ['REDDIT_CLIENT_SECRET']
         username = os.environ['REDDIT_USERNAME']
         user_agent = f"Perplexed:v1.0 (by /u/{username}"
-        reddit = praw.Reddit(
+        try:
+            reddit = praw.Reddit(
             client_id=client_id,
             client_secret=client_secret,
             user_agent=user_agent
         )
-
+        except Exception as e:
+            print("Unable to get reddit instance", e)
+            
         return reddit
 
 
