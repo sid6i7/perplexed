@@ -1,0 +1,4 @@
+discord
+praw
+python-dotenv
+google-generativeai
