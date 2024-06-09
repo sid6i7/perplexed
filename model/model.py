@@ -89,11 +89,10 @@ class Model:
         Returns:
             list: A list containing the prompt messages.
         """
-        comments = "\n".join([f"{comment['body'].strip()} : {comment['score']}" for comment in comments])
+        comments = "\n".join([f"{comment['body'].strip()} : {comment['score']} : {comment['url']} : {comment['post_title']}" for comment in comments])
         model_message = ChatMessage(
             role="model",
-            message=f"""Generate an response for the question: "{query}" by using knowledge from the provided comments.\nEach comment is in the format: <text: score>. Give importance to each
-            comment based on how high the score is."""
+            message=f"""Generate a response for the question: "{query}" by using knowledge from the provided comments.\nEach comment is in the format: <text : upvotes : url : post_title>. """
         )
         user_message = ChatMessage(
             role="user",
@@ -116,8 +115,11 @@ class Model:
         Args:
             query (str): The query to generate a response for.
         """
-        top_comments = self.reddit.search(query)
-        prompt = self.__generate_prompt(query, top_comments)
-        response = self.model.generate_content(contents=prompt)
-        
-        return response.text
+        try:
+            top_comments = self.reddit.search(query)
+            prompt = self.__generate_prompt(query, top_comments)
+            response = self.model.generate_content(contents=prompt).text
+        except:
+            print("Some error occurred")
+            response = "Unable to answer that question, it might be inappropiate."
+        return response
