@@ -101,4 +101,5 @@ class Reddit:
         return {
             "body": comment.body,
             "score": comment.score,
+            "url": f"https://www.reddit.com{comment.permalink}",
         }
