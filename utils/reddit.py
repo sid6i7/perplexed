@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 
+from utils.response_formatter import *
+
 load_dotenv()
 
 key = os.environ['GEMINI_API_KEY']
@@ -48,6 +50,15 @@ class Reddit:
             print("Unable to get reddit instance", e)
             
         return reddit
+    
+
+    def get_subreddit_urls(self, query, subreddit="all", limit=5):
+        try:
+            search_results = self.reddit.subreddit(subreddit).search(query, limit=limit)
+            urls = [f"https://www.reddit.com{submission.permalink}" for submission in search_results]
+            return format_subreddit_urls(urls)
+        except Exception as e:
+            return "Some error occurred " + e
 
 
     def search(self, query: str, subreddit="all", limit=5):
