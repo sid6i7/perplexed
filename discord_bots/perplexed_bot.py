@@ -30,7 +30,7 @@ async def on_message(message):
     if message.content.startswith("/search"):
         try:
             question = message.content.split('/search ')[1].strip()
-            processing_msg = await message.channel.send("Processing your question...")
+            processing_msg = await message.channel.send("Processing your search...")
             response = reddit.get_subreddit_urls(question)
             await processing_msg.edit(content=response)
         except Exception as e:
